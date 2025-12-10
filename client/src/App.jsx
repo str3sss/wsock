@@ -2,7 +2,27 @@ import { useState, useEffect, useRef } from 'react';
 import './App.css';
 import { getOrCreateUserId } from './utils/cookies';
 
-const WS_URL = import.meta.env.VITE_WS_URL || 'ws://localhost:3000/ws';
+/**
+ * Получает WebSocket URL с учетом протокола страницы
+ * Если страница загружена по HTTPS, использует wss://, иначе ws://
+ */
+function getWebSocketUrl() {
+  const envUrl = import.meta.env.VITE_WS_URL;
+  if (envUrl) {
+    // Если URL из env начинается с ws://, но страница HTTPS, заменяем на wss://
+    if (window.location.protocol === 'https:' && envUrl.startsWith('ws://')) {
+      return envUrl.replace('ws://', 'wss://');
+    }
+    return envUrl;
+  }
+
+  // По умолчанию используем протокол страницы
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const host = window.location.hostname === 'localhost' ? 'localhost:3000' : '192.168.0.13:3000';
+  return `${protocol}//${host}/ws`;
+}
+
+const WS_URL = getWebSocketUrl();
 
 function App() {
   const [connected, setConnected] = useState(false);

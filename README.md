@@ -232,7 +232,24 @@ npm run dev
 4. Введите ID комнаты (например, "room-1") и нажмите "Присоединиться"
 5. Откройте ту же комнату в другом окне/браузере для тестирования видеочата
 
-### Деплой клиента на GitHub Pages
+### Деплой клиента
+
+#### Вариант 1: Vercel (рекомендуется - бесплатный HTTPS)
+
+Подробные инструкции см. в файле [VERCEL_DEPLOY.md](./VERCEL_DEPLOY.md)
+
+**Быстрый старт:**
+
+```bash
+npm i -g vercel
+vercel login
+vercel
+# Добавьте переменные окружения через CLI или Dashboard
+vercel env add VITE_WS_URL production
+vercel --prod
+```
+
+#### Вариант 2: GitHub Pages
 
 Подробные инструкции по деплою см. в файле [DEPLOY.md](./DEPLOY.md)
 
@@ -240,7 +257,7 @@ npm run dev
 
 1. Залейте код на GitHub
 2. Настройте GitHub Pages в Settings → Pages (выберите GitHub Actions)
-3. Укажите ваш локальный IP в GitHub Secrets: `VITE_WS_URL=ws://YOUR_IP:3000/ws`
+3. Укажите ваш WebSocket URL в GitHub Secrets: `VITE_WS_URL=wss://YOUR_TUNNEL_URL/ws` (нужен SSL/туннель)
 4. После push в main ветку клиент автоматически задеплоится
 
 ### Запуск сервера локально
