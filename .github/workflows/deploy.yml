@@ -45,6 +45,9 @@ jobs:
         env:
           # Замените на ваш IP адрес или используйте GitHub Secrets
           VITE_WS_URL: ${{ secrets.VITE_WS_URL || 'ws://localhost:3000/ws' }}
+          GITHUB_PAGES: true
+          # Замените 'wsock' на имя вашего репозитория, если оно отличается
+          VITE_BASE_PATH: ${{ secrets.VITE_BASE_PATH || '/wsock/' }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
